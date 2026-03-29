@@ -8,13 +8,19 @@
    - Google 로그인
    - 회원/카테고리 셸
 
-2. [Prediction Pipeline](/Users/zunza/Documents/project/gachamarket/docs/superpowers/plans/2026-03-29-gachamarket-prediction-pipeline.md)
+2. [Backend Architecture Refactor](/Users/zunza/Documents/project/gachamarket/docs/superpowers/plans/2026-03-30-gachamarket-backend-architecture-refactor.md)
+   - 기능별 루트 유지
+   - application port/service/dto 분리
+   - domain model 과 JPA entity 분리
+   - 계층별 테스트 전략 정리
+
+3. [Prediction Pipeline](/Users/zunza/Documents/project/gachamarket/docs/superpowers/plans/2026-03-29-gachamarket-prediction-pipeline.md)
    - 경기 수집
    - 오즈 계산
    - 승인 큐
    - 공개 이벤트 목록/상세
 
-3. [Gameplay, Community, and Rank](/Users/zunza/Documents/project/gachamarket/docs/superpowers/plans/2026-03-29-gachamarket-gameplay-community-and-rank.md)
+4. [Gameplay, Community, and Rank](/Users/zunza/Documents/project/gachamarket/docs/superpowers/plans/2026-03-29-gachamarket-gameplay-community-and-rank.md)
    - 포인트 지갑
    - 베팅
    - 자동 정산

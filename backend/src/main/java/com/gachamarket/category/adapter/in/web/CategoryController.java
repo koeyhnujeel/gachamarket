@@ -1,6 +1,6 @@
 package com.gachamarket.category.adapter.in.web;
 
-import com.gachamarket.category.application.CategoryQueryService;
+import com.gachamarket.category.application.port.in.GetVisibleLeafCategoriesUseCase;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,14 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/categories")
 public class CategoryController {
 
-    private final CategoryQueryService categoryQueryService;
+    private final GetVisibleLeafCategoriesUseCase getVisibleLeafCategoriesUseCase;
 
-    public CategoryController(CategoryQueryService categoryQueryService) {
-        this.categoryQueryService = categoryQueryService;
+    public CategoryController(GetVisibleLeafCategoriesUseCase getVisibleLeafCategoriesUseCase) {
+        this.getVisibleLeafCategoriesUseCase = getVisibleLeafCategoriesUseCase;
     }
 
     @GetMapping("/leaf-slugs")
     public List<String> leafSlugs() {
-        return categoryQueryService.findVisibleLeafSlugs();
+        return getVisibleLeafCategoriesUseCase.getVisibleLeafCategories().stream()
+            .map(category -> category.slug())
+            .toList();
     }
 }
