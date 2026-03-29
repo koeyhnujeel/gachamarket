@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: gachamarket
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gachamarket
+    username: gachamarket
+    password: gachamarket
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  modulith:
+    events:
+      jdbc:
+        schema-initialization:
+          enabled: false
