@@ -7,10 +7,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.Instant;
 import java.util.UUID;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "members")
-public class JpaMemberEntity {
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class MemberJpaEntity {
 
     @Id
     private UUID id;
@@ -33,44 +40,19 @@ public class JpaMemberEntity {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
-    protected JpaMemberEntity() {
-    }
-
-    private JpaMemberEntity(
-        UUID id,
-        String email,
-        String nickname,
-        UUID activeTitleId,
-        boolean nicknameChangeFreeUsed,
-        Instant createdAt,
-        Instant updatedAt
-    ) {
-        this.id = id;
-        this.email = email;
-        this.nickname = nickname;
-        this.activeTitleId = activeTitleId;
-        this.nicknameChangeFreeUsed = nicknameChangeFreeUsed;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public static JpaMemberEntity from(Member member, Instant now) {
-        return new JpaMemberEntity(
-            member.id(),
-            member.email(),
-            member.nickname(),
+    public static MemberJpaEntity from(Member member, Instant now) {
+        return new MemberJpaEntity(
+            member.getId(),
+            member.getEmail(),
+            member.getNickname(),
             null,
-            member.nicknameChangeFreeUsed(),
+            member.isNicknameChangeFreeUsed(),
             now,
             now
         );
     }
 
     public Member toDomain() {
-        return new Member(id, email, nickname, nicknameChangeFreeUsed);
-    }
-
-    public UUID getId() {
-        return id;
+        return Member.of(id, email, nickname, nicknameChangeFreeUsed);
     }
 }

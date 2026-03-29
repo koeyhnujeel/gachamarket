@@ -9,6 +9,7 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.openfeign.querydsl/querydsl-codegen/7.0/aea9569ec6bfb3c9a0fb75bc1a9cbe177de779b6/querydsl-codegen-7.0.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/jakarta.annotation/jakarta.annotation-api/3.0.0/54f928fadec906a99d558536756d171917b9d936/jakarta.annotation-api-3.0.0.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/jakarta.persistence/jakarta.persistence-api/3.2.0/bb75a113f3fa191c2c7ee7b206d8e674251b3129/jakarta.persistence-api-3.2.0.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.44/503fd0b002dbb237fa4656cf4b8021666a8aebac/lombok-1.18.44.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.openfeign.querydsl/querydsl-core/7.0/50136447f01339654cf2ff28a368a551a55dff1c/querydsl-core-7.0.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.openfeign.querydsl/querydsl-codegen-utils/7.0/9b939fd11f2c3c3a6c81becde036aafc5c8c6c58/querydsl-codegen-utils-7.0.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/jakarta.inject/jakarta.inject-api/2.0.1/4c28afe1991a941d7702fe1362c365f0a8641d1e/jakarta.inject-api-2.0.1.jar" />
@@ -19,6 +20,13 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jspecify/jspecify/1.0.0/7425a601c1c7ec76645a78d22b8c6a627edee507/jspecify-1.0.0.jar" />
         </processorPath>
         <module name="com.gachamarket.gachamarket.main" />
+      </profile>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.44/503fd0b002dbb237fa4656cf4b8021666a8aebac/lombok-1.18.44.jar" />
+        </processorPath>
+        <module name="com.gachamarket.gachamarket.test" />
       </profile>
     </annotationProcessing>
   </component>

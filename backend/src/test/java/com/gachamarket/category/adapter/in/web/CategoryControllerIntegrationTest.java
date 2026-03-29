@@ -31,9 +31,9 @@ class CategoryControllerIntegrationTest {
     void returnsVisibleLeafSlugsFromDatabase() throws Exception {
         mockMvc.perform(get("/api/categories/leaf-slugs"))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$[0]").value("baseball-kbo"))
-            .andExpect(jsonPath("$[1]").value("basketball-nba"))
-            .andExpect(jsonPath("$[2]").value("football-epl"));
+            .andExpect(jsonPath("$[0].slug").value("baseball-kbo"))
+            .andExpect(jsonPath("$[1].slug").value("basketball-nba"))
+            .andExpect(jsonPath("$[2].slug").value("football-epl"));
 
         Integer visibleLeafCount = jdbcTemplate.queryForObject(
             """

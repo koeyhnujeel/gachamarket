@@ -15,8 +15,8 @@ class MemberTest {
             "GM-123456"
         );
 
-        assertThat(member.email()).isEqualTo("user@example.com");
-        assertThat(member.nickname()).isEqualTo("GM-123456");
-        assertThat(member.nicknameChangeFreeUsed()).isFalse();
+        assertThat(member.getEmail()).isEqualTo("user@example.com");
+        assertThat(member.getNickname()).isEqualTo("GM-123456");
+        assertThat(member.isNicknameChangeFreeUsed()).isFalse();
     }
 }

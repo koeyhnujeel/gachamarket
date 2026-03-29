@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface JpaMemberRepository extends JpaRepository<JpaMemberEntity, UUID> {
+public interface MemberJpaRepository extends JpaRepository<MemberJpaEntity, UUID> {
 
-    Optional<JpaMemberEntity> findByEmail(String email);
+    Optional<MemberJpaEntity> findByEmail(String email);
 }

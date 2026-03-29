@@ -1,6 +1,7 @@
 package com.gachamarket.identity.application.service;
 
-import com.gachamarket.identity.application.dto.RegisteredMemberDto;
+import com.gachamarket.identity.application.dto.command.RegisterMemberCommand;
+import com.gachamarket.identity.application.dto.result.RegisteredMemberResult;
 import com.gachamarket.identity.application.port.in.RegisterMemberUseCase;
 import com.gachamarket.identity.application.port.out.GenerateNicknamePort;
 import com.gachamarket.identity.application.port.out.LoadMemberPort;
@@ -33,23 +34,28 @@ public class MemberRegistrationService implements RegisterMemberUseCase {
 
     @Override
     @Transactional
-    public RegisteredMemberDto registerOrLoad(String email) {
-        return loadMemberPort.loadByEmail(email)
-            .map(memberAccount -> new RegisteredMemberDto(
-                memberAccount.member().id(),
-                memberAccount.member().email(),
-                memberAccount.member().nickname(),
-                memberAccount.wallet().currentPoint()
+    public RegisteredMemberResult registerOrLoad(RegisterMemberCommand command) {
+        return loadMemberPort.loadByEmail(command.email())
+            .map(memberAccount -> new RegisteredMemberResult(
+                memberAccount.getMember().getId(),
+                memberAccount.getMember().getEmail(),
+                memberAccount.getMember().getNickname(),
+                memberAccount.getWallet().getCurrentPoint()
             ))
-            .orElseGet(() -> registerNewMember(email));
+            .orElseGet(() -> registerNewMember(command.email()));
     }
 
-    private RegisteredMemberDto registerNewMember(String email) {
+    private RegisteredMemberResult registerNewMember(String email) {
         Member member = Member.register(UUID.randomUUID(), email, generateNicknamePort.generate());
-        Wallet wallet = Wallet.open(member.id(), INITIAL_POINT);
+        Wallet wallet = Wallet.open(member.getId(), INITIAL_POINT);
 
         saveMemberPort.save(member, wallet, Instant.now());
 
-        return new RegisteredMemberDto(member.id(), member.email(), member.nickname(), wallet.currentPoint());
+        return new RegisteredMemberResult(
+            member.getId(),
+            member.getEmail(),
+            member.getNickname(),
+            wallet.getCurrentPoint()
+        );
     }
 }

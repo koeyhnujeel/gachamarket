@@ -12,32 +12,32 @@ import org.springframework.stereotype.Component;
 @Component
 public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort {
 
-    private final JpaMemberRepository jpaMemberRepository;
-    private final JpaWalletRepository jpaWalletRepository;
+    private final MemberJpaRepository memberJpaRepository;
+    private final WalletJpaRepository walletJpaRepository;
 
     public MemberPersistenceAdapter(
-        JpaMemberRepository jpaMemberRepository,
-        JpaWalletRepository jpaWalletRepository
+        MemberJpaRepository memberJpaRepository,
+        WalletJpaRepository walletJpaRepository
     ) {
-        this.jpaMemberRepository = jpaMemberRepository;
-        this.jpaWalletRepository = jpaWalletRepository;
+        this.memberJpaRepository = memberJpaRepository;
+        this.walletJpaRepository = walletJpaRepository;
     }
 
     @Override
     public Optional<MemberAccount> loadByEmail(String email) {
-        return jpaMemberRepository.findByEmail(email)
+        return memberJpaRepository.findByEmail(email)
             .map(memberEntity -> {
-                Wallet wallet = jpaWalletRepository.findById(memberEntity.getId())
-                    .map(JpaWalletEntity::toDomain)
+                Wallet wallet = walletJpaRepository.findById(memberEntity.getId())
+                    .map(WalletJpaEntity::toDomain)
                     .orElseThrow(() -> new IllegalStateException("wallet not found for member " + memberEntity.getId()));
 
-                return new MemberAccount(memberEntity.toDomain(), wallet);
+                return MemberAccount.of(memberEntity.toDomain(), wallet);
             });
     }
 
     @Override
     public void save(Member member, Wallet wallet, Instant now) {
-        jpaMemberRepository.save(JpaMemberEntity.from(member, now));
-        jpaWalletRepository.save(JpaWalletEntity.from(wallet, now));
+        memberJpaRepository.save(MemberJpaEntity.from(member, now));
+        walletJpaRepository.save(WalletJpaEntity.from(wallet, now));
     }
 }

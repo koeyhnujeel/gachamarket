@@ -1,5 +1,6 @@
 package com.gachamarket.category.adapter.in.web;
 
+import com.gachamarket.category.adapter.in.web.response.CategoryLeafResponse;
 import com.gachamarket.category.application.port.in.GetVisibleLeafCategoriesUseCase;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +18,9 @@ public class CategoryController {
     }
 
     @GetMapping("/leaf-slugs")
-    public List<String> leafSlugs() {
+    public List<CategoryLeafResponse> leafSlugs() {
         return getVisibleLeafCategoriesUseCase.getVisibleLeafCategories().stream()
-            .map(category -> category.slug())
+            .map(category -> new CategoryLeafResponse(category.slug()))
             .toList();
     }
 }

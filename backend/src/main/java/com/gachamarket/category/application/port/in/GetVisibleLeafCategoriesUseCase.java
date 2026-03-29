@@ -1,9 +1,9 @@
 package com.gachamarket.category.application.port.in;
 
-import com.gachamarket.category.application.dto.CategoryLeafDto;
+import com.gachamarket.category.application.dto.result.CategoryLeafResult;
 import java.util.List;
 
 public interface GetVisibleLeafCategoriesUseCase {
 
-    List<CategoryLeafDto> getVisibleLeafCategories();
+    List<CategoryLeafResult> getVisibleLeafCategories();
 }

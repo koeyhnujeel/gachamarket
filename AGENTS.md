@@ -12,7 +12,9 @@ Backend features keep their own roots such as `backend/src/main/java/com/gachama
 - `application/service/`: use case implementations
 - `application/port/in`: adapter-facing use case contracts
 - `application/port/out`: persistence or external dependency contracts
-- `application/dto`: application request/response models
+- `application/dto/command`: input-bearing write use case models
+- `application/dto/query`: input-bearing read use case models
+- `application/dto/result`: application result models
 - `adapter/in`: web or inbound adapters
 - `adapter/out`: persistence or external outbound adapters
 
@@ -21,7 +23,7 @@ Respect the dependency direction:
 - `application -> domain`
 - `domain -> nothing`
 
-Separate domain models from JPA entities. Domain objects stay in `domain/`, and JPA entities plus repositories stay in `adapter/out/persistence/`.
+Separate domain models from JPA entities. Domain objects stay in `domain/`, and JPA entities plus repositories stay in `adapter/out/persistence/`. Name persistence entities as `*JpaEntity`.
 
 ## Build, Test, and Development Commands
 Implementation has not been scaffolded yet, so these commands become valid as the corresponding plan tasks land:
@@ -40,7 +42,8 @@ Follow the languages and structure defined in the plans: Java 21 for `backend/`,
 
 Until formatter configs are added, keep Java/Kotlin indentation at 4 spaces and frontend code at 2 spaces where the framework expects it. Prefer small, focused files over large cross-cutting modules.
 
-For backend package names, prefer explicit names such as `service`, `dto`, `port`, `persistence`, and `web` over ambiguous utility buckets.
+For backend package names, prefer explicit names such as `service`, `command`, `query`, `result`, `request`, `response`, `port`, `persistence`, and `web` over ambiguous utility buckets.
+Use `record` for DTOs and regular classes for domain models. Use Lombok in backend classes where it removes boilerplate cleanly.
 
 ## Testing Guidelines
 Backend tests should use JUnit 5 and Testcontainers where database behavior matters. Frontend tests should use Vitest and React Testing Library. Add or update tests in the same change as production code, and keep tests close to the feature they cover, for example `backend/src/test/java/...` or `frontend/src/components/__tests__/...`.

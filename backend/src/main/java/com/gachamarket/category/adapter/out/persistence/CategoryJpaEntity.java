@@ -6,10 +6,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.UUID;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "categories")
-public class JpaCategoryEntity {
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class CategoryJpaEntity {
 
     @Id
     private UUID id;
@@ -32,10 +37,7 @@ public class JpaCategoryEntity {
     @Column(nullable = false)
     private boolean visible;
 
-    protected JpaCategoryEntity() {
-    }
-
     public Category toDomain(boolean leaf) {
-        return new Category(id, parentId, slug, name, depth, sortOrder, visible, leaf);
+        return Category.of(id, parentId, slug, name, depth, sortOrder, visible, leaf);
     }
 }

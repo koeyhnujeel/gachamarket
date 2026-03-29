@@ -27,8 +27,12 @@
 - `com.gachamarket.identity.application.service`
 - `com.gachamarket.identity.application.port.in`
 - `com.gachamarket.identity.application.port.out`
-- `com.gachamarket.identity.application.dto`
+- `com.gachamarket.identity.application.dto.command`
+- `com.gachamarket.identity.application.dto.query`
+- `com.gachamarket.identity.application.dto.result`
 - `com.gachamarket.identity.adapter.in.web`
+- `com.gachamarket.identity.adapter.in.web.request`
+- `com.gachamarket.identity.adapter.in.web.response`
 - `com.gachamarket.identity.adapter.out.persistence`
 
 `category`도 같은 규칙을 따른다.
@@ -47,15 +51,16 @@
 
 ## 5. 도메인 모델과 JPA 엔티티 분리
 
-- domain 모델은 순수 자바 객체 또는 record로 유지한다.
-- JPA entity는 `adapter.out.persistence`에 둔다.
+- domain 모델은 Lombok 기반 순수 자바 class로 유지한다.
+- application/adapter DTO는 Java record로 유지한다.
+- JPA entity는 `adapter.out.persistence`에 두고 이름은 `*JpaEntity`로 맞춘다.
 - domain 모델은 비즈니스 의미를 표현하고, DB 컬럼 구조를 직접 드러내지 않는다.
 - JPA entity와 domain 모델 간 변환은 persistence adapter 내부 책임으로 둔다.
 
 초기 적용 대상:
 
-- `Category` domain model / `JpaCategoryEntity`
-- `Member`, `Wallet` domain model / `JpaMemberEntity`, `JpaWalletEntity`
+- `Category` domain model / `CategoryJpaEntity`
+- `Member`, `Wallet` domain model / `MemberJpaEntity`, `WalletJpaEntity`
 
 ## 6. application 계층 구조
 
@@ -64,7 +69,11 @@ application 계층은 다음 하위 패키지로 나눈다.
 - `service`: use case 구현
 - `port.in`: adapter가 호출하는 use case 계약
 - `port.out`: 외부 자원 접근 계약
-- `dto`: application이 노출하는 요청/응답 데이터
+- `dto.command`: 입력이 있는 쓰기 use case 요청
+- `dto.query`: 입력이 있는 읽기 use case 요청
+- `dto.result`: application이 반환하는 결과
+
+입력이 없는 조회 use case는 빈 query record를 만들지 않고 메서드 인자를 생략한다.
 
 초기 use case:
 

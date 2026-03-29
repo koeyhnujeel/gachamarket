@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.gachamarket.gachamarket.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.gachamarket.gachamarket.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.gachamarket.gachamarket.test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.gachamarket.gachamarket.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/gachamarket.iml" filepath="$PROJECT_DIR$/.idea/gachamarket.iml" />
     </modules>
   </component>

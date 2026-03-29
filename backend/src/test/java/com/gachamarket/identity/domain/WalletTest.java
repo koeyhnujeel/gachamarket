@@ -14,7 +14,7 @@ class WalletTest {
             1000
         );
 
-        assertThat(wallet.memberId()).isEqualTo(UUID.fromString("10000000-0000-0000-0000-000000000001"));
-        assertThat(wallet.currentPoint()).isEqualTo(1000);
+        assertThat(wallet.getMemberId()).isEqualTo(UUID.fromString("10000000-0000-0000-0000-000000000001"));
+        assertThat(wallet.getCurrentPoint()).isEqualTo(1000);
     }
 }

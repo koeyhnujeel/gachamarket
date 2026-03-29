@@ -4,7 +4,7 @@
 
 **Goal:** 기능별 루트를 유지하면서 백엔드를 `domain`, `application`, `adapter` 경계로 재정렬하고 계층별 테스트 전략을 적용한다.
 
-**Architecture:** 각 기능 아래에 `application/service`, `application/port`, `application/dto`, `adapter/in`, `adapter/out`, `domain` 패키지를 둔다. application은 out port를 통해서만 영속성에 접근하고, JPA entity는 persistence adapter 내부로 제한한다.
+**Architecture:** 각 기능 아래에 `application/service`, `application/port`, `application/dto/{command,query,result}`, `adapter/in/web/{request,response}`, `adapter/out`, `domain` 패키지를 둔다. application은 out port를 통해서만 영속성에 접근하고, JPA entity는 persistence adapter 내부로 제한한다. domain은 Lombok 기반 class로 두고 DTO는 record로 유지한다.
 
 **Tech Stack:** Java 21, Spring Boot, Spring Data JPA, Flyway, JUnit 5, Mockito, Testcontainers
 
@@ -12,12 +12,14 @@
 
 ## Planned File Structure
 
-- `backend/src/main/java/com/gachamarket/category/application/...`: 카테고리 조회 use case, DTO, port
+- `backend/src/main/java/com/gachamarket/category/application/...`: 카테고리 조회 use case, result DTO, port
 - `backend/src/main/java/com/gachamarket/category/adapter/out/persistence/...`: 카테고리 JPA entity, repository, adapter
-- `backend/src/main/java/com/gachamarket/category/domain/...`: 카테고리 순수 도메인 모델
-- `backend/src/main/java/com/gachamarket/identity/application/...`: 회원 등록 use case, DTO, port
+- `backend/src/main/java/com/gachamarket/category/adapter/in/web/response/...`: 카테고리 응답 DTO
+- `backend/src/main/java/com/gachamarket/category/domain/...`: 카테고리 순수 도메인 class
+- `backend/src/main/java/com/gachamarket/identity/application/...`: 회원 등록 use case, command/result DTO, port
 - `backend/src/main/java/com/gachamarket/identity/adapter/out/persistence/...`: 회원/지갑 JPA entity, repository, adapter
-- `backend/src/main/java/com/gachamarket/identity/domain/...`: 회원/지갑 순수 도메인 모델
+- `backend/src/main/java/com/gachamarket/identity/adapter/in/web/response/...`: 회원 응답 DTO
+- `backend/src/main/java/com/gachamarket/identity/domain/...`: 회원/지갑 순수 도메인 class
 - `backend/src/test/java/com/gachamarket/...`: domain/application/adapter 책임에 맞는 테스트
 - `AGENTS.md`: 백엔드 계층 규칙과 테스트 기준 반영
 
@@ -42,12 +44,13 @@ Expected: 컴파일 오류 또는 빈/클래스 부재로 FAIL
 
 **Files:**
 - Modify: `backend/src/main/java/com/gachamarket/category/adapter/in/web/CategoryController.java`
-- Create: `backend/src/main/java/com/gachamarket/category/application/dto/CategoryLeafDto.java`
+- Create: `backend/src/main/java/com/gachamarket/category/application/dto/result/CategoryLeafResult.java`
+- Create: `backend/src/main/java/com/gachamarket/category/adapter/in/web/response/CategoryLeafResponse.java`
 - Create: `backend/src/main/java/com/gachamarket/category/application/port/in/GetVisibleLeafCategoriesUseCase.java`
 - Create: `backend/src/main/java/com/gachamarket/category/application/port/out/LoadCategoryPort.java`
 - Create: `backend/src/main/java/com/gachamarket/category/application/service/CategoryQueryService.java`
-- Create: `backend/src/main/java/com/gachamarket/category/adapter/out/persistence/JpaCategoryEntity.java`
-- Create: `backend/src/main/java/com/gachamarket/category/adapter/out/persistence/JpaCategoryRepository.java`
+- Create: `backend/src/main/java/com/gachamarket/category/adapter/out/persistence/CategoryJpaEntity.java`
+- Create: `backend/src/main/java/com/gachamarket/category/adapter/out/persistence/CategoryJpaRepository.java`
 - Create: `backend/src/main/java/com/gachamarket/category/adapter/out/persistence/CategoryPersistenceAdapter.java`
 - Modify: `backend/src/main/java/com/gachamarket/category/domain/Category.java`
 
@@ -58,7 +61,8 @@ Expected: 컴파일 오류 또는 빈/클래스 부재로 FAIL
 ### Task 3: identity를 port/service/dto + persistence adapter 구조로 이동
 
 **Files:**
-- Create: `backend/src/main/java/com/gachamarket/identity/application/dto/RegisteredMemberDto.java`
+- Create: `backend/src/main/java/com/gachamarket/identity/application/dto/command/RegisterMemberCommand.java`
+- Create: `backend/src/main/java/com/gachamarket/identity/application/dto/result/RegisteredMemberResult.java`
 - Create: `backend/src/main/java/com/gachamarket/identity/application/port/in/RegisterMemberUseCase.java`
 - Create: `backend/src/main/java/com/gachamarket/identity/application/port/out/LoadMemberPort.java`
 - Create: `backend/src/main/java/com/gachamarket/identity/application/port/out/SaveMemberPort.java`
@@ -66,10 +70,11 @@ Expected: 컴파일 오류 또는 빈/클래스 부재로 FAIL
 - Modify: `backend/src/main/java/com/gachamarket/identity/application/NicknameGenerator.java`
 - Modify: `backend/src/main/java/com/gachamarket/identity/domain/Member.java`
 - Create: `backend/src/main/java/com/gachamarket/identity/domain/Wallet.java`
-- Create: `backend/src/main/java/com/gachamarket/identity/adapter/out/persistence/JpaMemberEntity.java`
-- Create: `backend/src/main/java/com/gachamarket/identity/adapter/out/persistence/JpaWalletEntity.java`
-- Create: `backend/src/main/java/com/gachamarket/identity/adapter/out/persistence/JpaMemberRepository.java`
-- Create: `backend/src/main/java/com/gachamarket/identity/adapter/out/persistence/JpaWalletRepository.java`
+- Create: `backend/src/main/java/com/gachamarket/identity/adapter/in/web/response/MeResponse.java`
+- Create: `backend/src/main/java/com/gachamarket/identity/adapter/out/persistence/MemberJpaEntity.java`
+- Create: `backend/src/main/java/com/gachamarket/identity/adapter/out/persistence/WalletJpaEntity.java`
+- Create: `backend/src/main/java/com/gachamarket/identity/adapter/out/persistence/MemberJpaRepository.java`
+- Create: `backend/src/main/java/com/gachamarket/identity/adapter/out/persistence/WalletJpaRepository.java`
 - Create: `backend/src/main/java/com/gachamarket/identity/adapter/out/persistence/MemberPersistenceAdapter.java`
 
 - [ ] **Step 1: failing test를 통과시키는 최소 identity domain/application 구조를 작성한다**

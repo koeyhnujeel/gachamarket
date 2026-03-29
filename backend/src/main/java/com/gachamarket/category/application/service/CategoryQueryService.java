@@ -1,6 +1,6 @@
 package com.gachamarket.category.application.service;
 
-import com.gachamarket.category.application.dto.CategoryLeafDto;
+import com.gachamarket.category.application.dto.result.CategoryLeafResult;
 import com.gachamarket.category.application.port.in.GetVisibleLeafCategoriesUseCase;
 import com.gachamarket.category.application.port.out.LoadCategoryPort;
 import java.util.List;
@@ -16,9 +16,9 @@ public class CategoryQueryService implements GetVisibleLeafCategoriesUseCase {
     }
 
     @Override
-    public List<CategoryLeafDto> getVisibleLeafCategories() {
+    public List<CategoryLeafResult> getVisibleLeafCategories() {
         return loadCategoryPort.loadVisibleLeafCategories().stream()
-            .map(category -> new CategoryLeafDto(category.slug()))
+            .map(category -> new CategoryLeafResult(category.getSlug()))
             .toList();
     }
 }

@@ -7,10 +7,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.Instant;
 import java.util.UUID;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "wallets")
-public class JpaWalletEntity {
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class WalletJpaEntity {
 
     @Id
     @Column(name = "member_id")
@@ -22,20 +29,11 @@ public class JpaWalletEntity {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
-    protected JpaWalletEntity() {
-    }
-
-    private JpaWalletEntity(UUID memberId, int currentPoint, Instant updatedAt) {
-        this.memberId = memberId;
-        this.currentPoint = currentPoint;
-        this.updatedAt = updatedAt;
-    }
-
-    public static JpaWalletEntity from(Wallet wallet, Instant now) {
-        return new JpaWalletEntity(wallet.memberId(), wallet.currentPoint(), now);
+    public static WalletJpaEntity from(Wallet wallet, Instant now) {
+        return new WalletJpaEntity(wallet.getMemberId(), wallet.getCurrentPoint(), now);
     }
 
     public Wallet toDomain() {
-        return new Wallet(memberId, currentPoint);
+        return Wallet.open(memberId, currentPoint);
     }
 }

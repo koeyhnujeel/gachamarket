@@ -4,18 +4,18 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface JpaCategoryRepository extends JpaRepository<JpaCategoryEntity, java.util.UUID> {
+public interface CategoryJpaRepository extends JpaRepository<CategoryJpaEntity, java.util.UUID> {
 
     @Query("""
         select c
-        from JpaCategoryEntity c
+        from CategoryJpaEntity c
         where c.visible = true
           and not exists (
             select 1
-            from JpaCategoryEntity child
+            from CategoryJpaEntity child
             where child.parentId = c.id
           )
         order by c.sortOrder, c.slug
         """)
-    List<JpaCategoryEntity> findVisibleLeafCategories();
+    List<CategoryJpaEntity> findVisibleLeafCategories();
 }

@@ -8,15 +8,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class CategoryPersistenceAdapter implements LoadCategoryPort {
 
-    private final JpaCategoryRepository jpaCategoryRepository;
+    private final CategoryJpaRepository categoryJpaRepository;
 
-    public CategoryPersistenceAdapter(JpaCategoryRepository jpaCategoryRepository) {
-        this.jpaCategoryRepository = jpaCategoryRepository;
+    public CategoryPersistenceAdapter(CategoryJpaRepository categoryJpaRepository) {
+        this.categoryJpaRepository = categoryJpaRepository;
     }
 
     @Override
     public List<Category> loadVisibleLeafCategories() {
-        return jpaCategoryRepository.findVisibleLeafCategories().stream()
+        return categoryJpaRepository.findVisibleLeafCategories().stream()
             .map(entity -> entity.toDomain(true))
             .toList();
     }

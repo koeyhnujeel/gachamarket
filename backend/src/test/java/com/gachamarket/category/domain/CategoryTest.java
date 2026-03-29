@@ -9,7 +9,7 @@ class CategoryTest {
 
     @Test
     void identifiesVisibleLeafCategory() {
-        Category category = new Category(
+        Category category = Category.of(
             UUID.fromString("00000000-0000-0000-0000-000000000021"),
             UUID.fromString("00000000-0000-0000-0000-000000000011"),
             "football-epl",
@@ -21,5 +21,6 @@ class CategoryTest {
         );
 
         assertThat(category.isVisibleLeaf()).isTrue();
+        assertThat(category.getSlug()).isEqualTo("football-epl");
     }
 }

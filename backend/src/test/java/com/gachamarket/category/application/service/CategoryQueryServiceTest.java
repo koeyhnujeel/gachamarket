@@ -5,7 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.gachamarket.category.application.dto.CategoryLeafDto;
+import com.gachamarket.category.application.dto.result.CategoryLeafResult;
 import com.gachamarket.category.application.port.out.LoadCategoryPort;
 import com.gachamarket.category.domain.Category;
 import java.util.List;
@@ -20,7 +20,7 @@ class CategoryQueryServiceTest {
         CategoryQueryService categoryQueryService = new CategoryQueryService(loadCategoryPort);
 
         when(loadCategoryPort.loadVisibleLeafCategories()).thenReturn(List.of(
-            new Category(
+            Category.of(
                 UUID.fromString("00000000-0000-0000-0000-000000000021"),
                 UUID.fromString("00000000-0000-0000-0000-000000000011"),
                 "football-epl",
@@ -30,7 +30,7 @@ class CategoryQueryServiceTest {
                 true,
                 true
             ),
-            new Category(
+            Category.of(
                 UUID.fromString("00000000-0000-0000-0000-000000000022"),
                 UUID.fromString("00000000-0000-0000-0000-000000000012"),
                 "baseball-kbo",
@@ -42,10 +42,10 @@ class CategoryQueryServiceTest {
             )
         ));
 
-        List<CategoryLeafDto> result = categoryQueryService.getVisibleLeafCategories();
+        List<CategoryLeafResult> result = categoryQueryService.getVisibleLeafCategories();
 
         assertThat(result)
-            .extracting(CategoryLeafDto::slug)
+            .extracting(CategoryLeafResult::slug)
             .containsExactly("football-epl", "baseball-kbo");
         verify(loadCategoryPort).loadVisibleLeafCategories();
     }
