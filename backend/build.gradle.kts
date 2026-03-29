@@ -49,3 +49,8 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+tasks.named<org.springframework.boot.gradle.tasks.run.BootRun>("bootRun") {
+    val activeProfile = System.getProperty("spring.profiles.active") ?: "local"
+    systemProperty("spring.profiles.active", activeProfile)
+}

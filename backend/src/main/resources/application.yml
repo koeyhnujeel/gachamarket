@@ -1,10 +1,6 @@
 spring:
   application:
     name: gachamarket
-  datasource:
-    url: jdbc:postgresql://localhost:5432/gachamarket
-    username: gachamarket
-    password: gachamarket
   jpa:
     hibernate:
       ddl-auto: validate
@@ -14,10 +10,3 @@ spring:
       jdbc:
         schema-initialization:
           enabled: false
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: ${GOOGLE_CLIENT_ID:dummy-client-id}
-            client-secret: ${GOOGLE_CLIENT_SECRET:dummy-client-secret}
