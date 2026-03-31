@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: gachamarket
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        default_schema: public
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration

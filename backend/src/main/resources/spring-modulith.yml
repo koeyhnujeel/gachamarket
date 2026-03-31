@@ -1,0 +1,16 @@
+spring.modulith:
+  modules:
+    shared:
+      base-packages: com.gachamarket.shared
+    support:
+      base-packages: com.gachamarket.support
+    security:
+      base-packages: com.gachamarket.security
+    identity:
+      base-packages: com.gachamarket.identity
+    market:
+      base-packages: com.gachamarket.market
+    comment:
+      base-packages: com.gachamarket.comment
+    odds:
+      base-packages: com.gachamarket.odds

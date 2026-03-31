@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:17.9-alpine3.23:///gachamarket_test
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  docker:
+    compose:
+      enabled: false
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: test-client-id
+            client-secret: test-client-secret
+            scope:
+              - email
+
+jwt:
+  secret: test-jwt-secret-key-that-is-at-least-256-bits-long-for-hs256
+  expiration: 86400000
+
+odds-api:
+  key: test-odds-api-key
+  base-url: https://api.the-odds-api.com/v4

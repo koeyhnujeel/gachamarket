@@ -46,3 +46,14 @@ replay_pid*
 # Repository-specific tool output
 .worktrees/
 .superpowers/
+
+# Gradle
+backend/.gradle/
+backend/build/
+backend/.java/
+backend/out/
+backend/bin/
+
+# Environment
+backend/.env
+backend/.env.local
