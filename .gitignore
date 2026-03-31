@@ -29,7 +29,7 @@
 .idea/httpRequests
 .idea/caches/build_file_checksums.ser
 *.iws
-out/
+/out/
 .idea_modules/
 atlassian-ide-plugin.xml
 crashlytics.properties
