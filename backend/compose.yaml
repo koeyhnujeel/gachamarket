@@ -1,9 +1,0 @@
-services:
-  postgresql:
-    image: postgres:17.9
-    environment:
-      POSTGRES_DB: gachamarket
-      POSTGRES_USER: gachamarket
-      POSTGRES_PASSWORD: gachamarket
-    ports:
-      - "5432:5432"
